@@ -1,4 +1,4 @@
-# CLAIMS GUARDRAILS — CERTIFICATE.NOW
+# CLAIMS GUARDRAILS — certnow
 
 **Purpose:** Legal + trust. When specific terms may be used.
 

@@ -37,7 +37,7 @@ export default function StorePage({
             Authorized Dealer since 1985
           </p>
           <p className="mt-1 text-sm text-emerald-700">
-            Certificate.now Verified
+            certnow Verified
           </p>
           <div className="mt-4 space-y-1 text-sm">
             <p>215 N Rodeo Dr, Beverly Hills</p>

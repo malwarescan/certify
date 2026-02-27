@@ -1,4 +1,4 @@
-# Certificate.now v4: The Certified Intelligence Platform
+# certnow v4: The Certified Intelligence Platform
 
 ## Design Philosophy: "Clarity Meets Luxury"
 

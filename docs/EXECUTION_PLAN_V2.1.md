@@ -1,4 +1,4 @@
-# EXECUTION PLAN v2.1 — CERTIFICATE.NOW
+# EXECUTION PLAN v2.1 — certnow
 
 **Status:** Ship-ready | **Lock:** Identity + Protocol + UI Spec
 
@@ -6,7 +6,7 @@
 
 ## 1. NORTH STAR (DO NOT DEVIATE)
 
-Certificate.now is not "an app that verifies." It is **the trust registry + proof artifact standard** that luxury and resale can rely on.
+certnow is not "an app that verifies." It is **the trust registry + proof artifact standard** that luxury and resale can rely on.
 
 Every screen must feel like a hallmark: **calm, exact, archival, inevitable.**
 

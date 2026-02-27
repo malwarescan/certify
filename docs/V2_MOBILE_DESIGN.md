@@ -1,4 +1,4 @@
-# Certificate.now v2: Mobile-First Product Library
+# certnow v2: Mobile-First Product Library
 
 ## Core Concept: "The Luxury Vault in Your Pocket"
 

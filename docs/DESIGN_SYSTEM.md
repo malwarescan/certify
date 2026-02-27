@@ -1,8 +1,8 @@
-# Certificate.now: The "Certified Authority" Design System
+# certnow: The "Certified Authority" Design System
 
 ## Core Philosophy: "The Vault of Trust"
 
-Certificate.now triggers **instant authority** and **subconscious trust** within 0.5 seconds of viewing.
+certnow triggers **instant authority** and **subconscious trust** within 0.5 seconds of viewing.
 
 | Emotion | Trigger | Implementation |
 |---------|---------|----------------|

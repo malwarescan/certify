@@ -44,7 +44,7 @@ export function VerificationBadge({ className, compact }: VerificationBadgeProps
         </div>
 
         <span className="text-sm font-medium text-blue-100">
-          Certificate.now
+          certnow
         </span>
 
         <div className="my-1 h-px bg-gradient-to-r from-transparent via-gold-800/50 to-transparent" />

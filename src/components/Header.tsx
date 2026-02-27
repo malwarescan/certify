@@ -12,7 +12,7 @@ export default function Header() {
               <CheckIcon className="h-5 w-5 text-white" />
             </div>
             <span className="text-xl font-bold text-slate-900">
-              Certificate.now
+              certnow
             </span>
           </div>
 

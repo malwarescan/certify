@@ -1,4 +1,4 @@
-# ROUTE STRUCTURE — CERTIFICATE.NOW
+# ROUTE STRUCTURE — certnow
 
 **Source of truth for routing. Aligns with EXECUTION_PLAN_V2.1.**
 

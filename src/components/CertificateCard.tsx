@@ -43,7 +43,7 @@ export function CertificateCard({
             {brandName.charAt(0)}
           </div>
           <span className="text-sm font-medium text-vault-stone">
-            Certificate.now
+            certnow
           </span>
         </div>
 
@@ -103,7 +103,7 @@ export function CertificateCard({
       <div className="border-t border-vault-mist bg-white px-6 py-3">
         <p className="flex items-center gap-2 text-xs text-vault-stone">
           <LockIcon className="h-4 w-4" />
-          Secured by Certificate.now Blockchain
+          Secured by certnow Blockchain
         </p>
       </div>
     </div>

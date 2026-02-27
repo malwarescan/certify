@@ -1,5 +1,5 @@
 /**
- * Certificate.now Design Tokens
+ * certnow Design Tokens
  * Single source of truth. No inline random values.
  * See docs/TRUST_MARK_SPEC.md for usage rules.
  */

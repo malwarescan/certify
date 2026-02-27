@@ -36,7 +36,7 @@ export default async function RecordPage({
             href="/"
             className="text-sm font-semibold text-slate-900 hover:text-slate-700"
           >
-            CERTIFICATE.NOW
+            certnow
           </Link>
           <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
             Verification Record

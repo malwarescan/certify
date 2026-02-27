@@ -1,4 +1,4 @@
-# CORE META DIRECTIVES — CERTIFICATE.NOW
+# CORE META DIRECTIVES — certnow
 
 **Version:** 2.1  
 **Goal:** Enhance (not redesign) into a sovereign "trust mark" product that feels inevitable, standard-setting, and boardroom-grade.
@@ -8,7 +8,7 @@
 ---
 
 ## 1. ONE NORTH STAR
-Build Certificate.now as **"the trust mark + registry layer for luxury commerce."**
+Build certnow as **"the trust mark + registry layer for luxury commerce."**
 Every UI decision must reinforce: portable proof, registry-backed verification, accepted anywhere.
 
 ## 2. NO FEATURE-LIST MARKETING

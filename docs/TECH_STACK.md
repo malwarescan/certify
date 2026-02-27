@@ -1,4 +1,4 @@
-# Certificate.now: Technical Stack
+# certnow: Technical Stack
 
 ## Executive Summary
 

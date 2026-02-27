@@ -13,7 +13,7 @@ async function main() {
 
   // 2. Deploy CertificateNFT
   const NFT = await hre.ethers.getContractFactory("CertificateNFT");
-  const nft = await NFT.deploy(registryAddress, "Certificate.now", "CERT");
+  const nft = await NFT.deploy(registryAddress, "certnow", "CERT");
   await nft.waitForDeployment();
   const nftAddress = await nft.getAddress();
   console.log("CertificateNFT deployed to:", nftAddress);

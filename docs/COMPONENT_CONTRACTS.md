@@ -1,4 +1,4 @@
-# COMPONENT CONTRACTS — CERTIFICATE.NOW
+# COMPONENT CONTRACTS — certnow
 
 **Purpose:** Exact interfaces so nothing drifts. All Proof/Report UI must conform.
 

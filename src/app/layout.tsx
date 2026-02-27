@@ -22,7 +22,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Certificate.now | Authenticity Infrastructure",
+  title: "certnow | Authenticity Infrastructure",
   description:
     "Global authenticity infrastructure for luxury commerce. AI-driven verification, cryptographic binding, portable proof.",
 };

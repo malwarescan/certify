@@ -1,8 +1,8 @@
-# Certificate.now: Smart Contract Architecture
+# certnow: Smart Contract Architecture
 
 ## Overview
 
-The Certificate.now blockchain layer uses a **hybrid architecture** on Polygon PoS:
+The certnow blockchain layer uses a **hybrid architecture** on Polygon PoS:
 
 1. **CertificateNFT** (ERC-721A) – Ownership records, transfer history, public verification
 2. **VerificationRegistry** – NFC tag ↔ Token binding, anti-cloning, verification events
@@ -13,7 +13,7 @@ The Certificate.now blockchain layer uses a **hybrid architecture** on Polygon P
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                        CERTIFICATE.NOW LAYER                             │
+│                        certnow LAYER                             │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                          │
 │  ┌─────────────────────────────┐    ┌─────────────────────────────┐    │

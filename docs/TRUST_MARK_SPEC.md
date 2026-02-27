@@ -1,4 +1,4 @@
-# TRUST MARK SPEC — CERTIFICATE.NOW
+# TRUST MARK SPEC — certnow
 
 **Version:** 1.0  
 **Purpose:** Single source of truth for visual identity. All UI must conform.
@@ -10,10 +10,10 @@
 ### Structure
 - **CERTIFICATE** — archival tone, lighter weight (500–600), extended tracking (0.02em)
 - **now** — decisive, heavier weight (700–800), tight tracking (-0.02em)
-- **Truth Bit:** The dot in "Certificate.now" may be replaced with the emerald checkmark (●) where the brand allows. Use sparingly.
+- **Truth Bit:** The dot in "certnow" may be replaced with the emerald checkmark (●) where the brand allows. Use sparingly.
 
 ### Usage
-- Primary: `Certificate.now` on snow (#F8FAFC) or sovereign navy (#0F172A)
+- Primary: `certnow` on snow (#F8FAFC) or sovereign navy (#0F172A)
 - Minimum size: 24px for wordmark
 - Clear space: 1x height of "C" on all sides
 
