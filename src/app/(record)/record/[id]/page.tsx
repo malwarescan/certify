@@ -80,14 +80,14 @@ export default async function RecordPage({
                 {record.product.images.map((src, i) => (
                   <div
                     key={src}
-                    className="aspect-square overflow-hidden rounded-lg border border-slate-200"
+                    className="relative aspect-square overflow-hidden rounded-lg border border-slate-200 bg-slate-50"
                   >
                     <Image
                       src={src}
                       alt={`${record.product.name} — ${i + 1}`}
-                      width={200}
-                      height={200}
-                      className="h-full w-full object-cover"
+                      fill
+                      sizes="(max-width: 640px) 50vw, 33vw"
+                      className="object-contain"
                     />
                   </div>
                 ))}
