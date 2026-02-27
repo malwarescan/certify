@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Certificate Object Spec",
+  "description": "Machine + human readable proof object. Required for all certificates.",
+  "version": "1.0.0",
+  "type": "object",
+  "required": [
+    "id",
+    "specVersion",
+    "version",
+    "createdAt",
+    "issuer",
+    "subject",
+    "binding",
+    "status",
+    "evidence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable, globally unique certificate ID (e.g. cert_abc123 or UUID)",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "specVersion": {
+      "type": "string",
+      "description": "Protocol spec version (e.g. 1.0.0)"
+    },
+    "version": {
+      "type": "string",
+      "description": "Schema version for forward compatibility",
+      "enum": ["1.0"]
+    },
+    "renderVersion": {
+      "type": "string",
+      "description": "UI render version; changes don't invalidate old proofs"
+    },
+    "schemaHash": {
+      "type": "string",
+      "description": "Hash of canonical JSON schema"
+    },
+    "verifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When verification was last confirmed; used for Proof Summary timestamp"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of certificate issuance"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last modification (e.g. transfer, revocation)"
+    },
+    "issuer": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "description": "Issuer registry ID" },
+        "name": { "type": "string", "description": "Brand or issuer display name" },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "required": ["assetId", "assetType"],
+      "properties": {
+        "assetId": { "type": "string", "description": "Item-level identifier" },
+        "assetType": { "type": "string", "description": "e.g. watch, bag, jewelry" },
+        "displayName": { "type": "string", "description": "Human-readable item name for Proof Summary" },
+        "description": { "type": "string" },
+        "metadata": { "type": "object" }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "required": ["method"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["nfc", "qr", "serial", "manual"],
+          "description": "How certificate is bound to physical asset"
+        },
+        "nfcUid": { "type": "string" },
+        "qrPayload": { "type": "string" },
+        "serialNumber": { "type": "string" }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["verified", "not_verified", "pending", "tampered", "revoked"],
+      "description": "Verification state"
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["pointers"],
+      "properties": {
+        "pointers": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "URIs to blockchain tx, attestation, etc."
+        },
+        "signature": { "type": "string" },
+        "blockchainTx": { "type": "string" }
+      }
+    },
+    "revocation": {
+      "type": "object",
+      "properties": {
+        "revokedAt": { "type": "string", "format": "date-time" },
+        "reason": { "type": "string" },
+        "revokedBy": { "type": "string" }
+      }
+    },
+    "transferHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

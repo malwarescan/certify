@@ -1,0 +1,11 @@
+# Computed Styles — .seal__rotor
+# Captured: 2026-02-27T15:48:40.564Z
+# Mode: DEBUG
+
+animation-name: seal-rotate
+animation-duration: 6s
+animation-play-state: running
+animation-timing-function: linear
+animation-iteration-count: infinite
+transform: matrix(0.276621, 0.960979, -0.960979, 0.276621, 0, 0)
+transform-origin: 190px 190px

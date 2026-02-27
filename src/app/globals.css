@@ -2,26 +2,844 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Certificate.now: Clarity-style "Certified Intelligence" Design System */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFFFFF;
+  --foreground: #0F172A;
+  --sovereign-navy: #0F172A;
+  --verity-emerald: #0d9670;
+  --titanium: #94A3B8;
+  --snow: #F8FAFC;
+
+  /* Master blue scale — controlled, matte, deliberate (flattened ~12%) */
+  --aura-1: #243a7a;
+  --aura-2: #2d5ab8;
+  --aura-3: #4a6fd4;
+
+  --aura-gradient: linear-gradient(
+    135deg,
+    var(--aura-1) 0%,
+    var(--aura-2) 45%,
+    var(--aura-3) 100%
+  );
+
+  /* Infrastructure mode: blue = interface, not accent */
+  --aura-sat: 0.82;
+  --aura-bright: 1.02;
+  --aura-contrast: 0.96;
+
+  /* bloom controls */
+  --aura-bloom-opacity: 0.55;
+  --aura-bloom-blur: 18px;
+
+  /* edge + film controls */
+  --aura-edge: rgba(255, 255, 255, 0.22);
+  --aura-film-top: rgba(255, 255, 255, 0.18);
+  --aura-film-mid: rgba(255, 255, 255, 0.08);
+  --aura-film-bot: rgba(0, 0, 0, 0.08);
+
+  /* restrained depth tints */
+  --aura-blue: rgba(43, 109, 235, 0.16);
+  --aura-violet: rgba(124, 77, 255, 0.1);
+  --depth: rgba(2, 6, 23, 0.14);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+  --shadow-glow-emerald: 0 0 20px rgba(16, 185, 129, 0.3);
+  --shadow-glow-gold: 0 0 20px rgba(245, 158, 11, 0.3);
+
+  /* Seal motion (Rolex rotor) */
+  --seal-rotor-a: 60s;   /* outer CW */
+  --seal-rotor-b: 90s;   /* inner CCW */
+  --seal-breathe: 8s;    /* subtle aura pulse */
+  --seal-notch-opacity: 0.65;  /* production floor — notch-driven readability */
+  --seal-notch-bg: rgba(255, 255, 255, 0.95);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Debug: faster speeds + obvious notch */
+:root[data-seal-debug="1"] {
+  --seal-rotor-a: 6s;
+  --seal-rotor-b: 9s;
+  --seal-notch-opacity: 1;
+  --seal-notch-bg: #fff;
+}
+
+/* Seal keyframes — explicit from/to so transform actually animates */
+@keyframes seal-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Specular sweep — light glint, rotates slower than rotor (drift) */
+@keyframes seal-specular {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Seal activation ripple — registration event, not loading state */
+@keyframes seal-ripple {
+  0% { opacity: 0; transform: scale(0.98); }
+  50% { opacity: 0.08; transform: scale(1.01); }
+  100% { opacity: 0; transform: scale(1.02); }
+}
+
+/* Checkmark stamp settle — scale + rotate + opacity, one-time */
+@keyframes seal-check-stamp {
+  0% {
+    opacity: 0.7;
+    transform: translate(-50%, calc(-50% + 1px)) scale(0.98) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, calc(-50% + 1px)) scale(1) rotate(0deg);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans tracking-tight font-bold;
+    letter-spacing: -0.03em;
+  }
+
+  h1 {
+    font-weight: 800;
+  }
+  h2, h3 {
+    font-weight: 700;
+  }
+
+  .hero-headline {
+    line-height: 1.05;
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-cert-500 ring-offset-2 ring-offset-white;
+  }
+}
+
+@layer components {
+  /* DATA CARD — Microsoft Clarity Style */
+  .data-card {
+    @apply bg-white rounded-xl border border-slate-200 p-6;
+    @apply shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_0_rgba(0,0,0,0.06)];
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .data-card:hover {
+    @apply shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] -translate-y-0.5;
+    @apply border-slate-300;
+  }
+
+  .data-number {
+    @apply text-4xl font-bold text-slate-900 tracking-tight tabular-nums;
+  }
+
+  .data-label {
+    @apply text-sm font-semibold text-slate-500 uppercase tracking-wider mt-1;
+  }
+
+  .data-trend {
+    @apply text-sm font-medium text-emerald-600 mt-2 flex items-center gap-1;
+  }
+
+  /* INSIGHT CARD - Authenticity insight */
+  .insight-card {
+    @apply bg-blue-50 rounded-lg border-l-4 border-cert-500 p-4;
+  }
+
+  /* LUXURY CARD - For premium content */
+  .luxury-card {
+    @apply bg-white rounded-xl border border-slate-200 overflow-hidden;
+    @apply shadow-elevated;
+  }
+
+  /* HERO PLATE — one surface, atmosphere not layers (no seam at hero text start) */
+  .hero-plate {
+    background:
+      linear-gradient(to bottom, rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0.68) 42%, rgba(248, 250, 252, 0) 100%),
+      radial-gradient(900px circle at 18% 12%, rgba(43, 109, 235, 0.068), transparent 60%),
+      radial-gradient(760px circle at 74% 28%, rgba(124, 77, 255, 0.05), transparent 55%);
+  }
+
+  /* NFC TAP ZONE */
+  .nfc-zone {
+    @apply relative rounded-2xl border-2 border-dashed border-slate-300;
+    @apply bg-slate-50 flex flex-col items-center justify-center;
+    @apply hover:border-cert-400 hover:bg-cert-50 transition-colors duration-200;
+  }
+
+  /* HEADER RAIL — content on plate, not frosted overlay */
+  .header-rail {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    overflow: visible;
+    background: transparent;
+  }
+  .header-rail > div {
+    position: relative;
+    background-color: transparent;
+    border: none;
+  }
+
+  /* Nav hover underline — titanium hairline */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.4);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 200ms ease;
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* PRIMARY CTA — machined, not electrified. No glows, halos, neon. */
+  .btn-primary {
+    height: 46px;
+    min-height: 46px;
+    padding: 0 24px;
+    border-radius: 14px;
+
+    color: #fff;
+    font-weight: 600;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    z-index: 1;
+
+    background-image: var(--aura-gradient);
+    background-size: 260% 260%;
+    background-position: 28% 40%;
+    background-repeat: no-repeat;
+
+    filter: saturate(var(--aura-sat)) brightness(var(--aura-bright)) contrast(var(--aura-contrast));
+
+    box-shadow:
+      0 6px 14px rgba(37, 99, 235, 0.10),
+      0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      filter 180ms ease;
+  }
+
+  /* Subtle film — not airbrush stack */
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(180deg, var(--aura-film-top) 0%, var(--aura-film-mid) 50%, var(--aura-film-bot) 100%);
+    mix-blend-mode: soft-light;
+    opacity: 0.6;
+  }
+
+  /* No halo. No glow. No outer aura. */
+  .btn-primary::after {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .btn-primary {
+      height: 50px;
+      min-height: 50px;
+    }
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    filter: saturate(0.9) brightness(1.04) contrast(0.98);
+    box-shadow:
+      0 8px 18px rgba(37, 99, 235, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+  }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(0.99);
+    filter: saturate(0.88) brightness(1.02) contrast(0.98);
+    box-shadow:
+      0 4px 12px rgba(37, 99, 235, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+  }
+
+  .btn-primary:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px rgba(43, 109, 235, 0.25),
+      0 6px 14px rgba(37, 99, 235, 0.10),
+      0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+  }
+
+  /* Header CTA — same treatment, slightly smaller */
+  .btn-primary[data-surface="header"] {
+    height: 44px;
+    min-height: 44px;
+    box-shadow:
+      0 6px 14px rgba(37, 99, 235, 0.10),
+      0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+  }
+  .btn-primary[data-surface="header"]:hover {
+    box-shadow:
+      0 8px 18px rgba(37, 99, 235, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+  }
+
+  /* MOBILE FULL-WIDTH OPTION */
+  .btn-primary.is-full {
+    width: 100%;
+  }
+
+  /* CTA wrappers: glow must NOT be clipped */
+  .cta-row,
+  .hero-cta-row {
+    overflow: visible;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* CTA panel — reduced contrast, machined edge */
+  .cta-panel {
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: 0 18px 50px rgba(2, 6, 23, 0.12);
+  }
+
+  .btn-secondary {
+    height: 46px;
+    min-height: 46px;
+    padding: 0 24px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #334155;
+    background: rgba(248, 250, 252, 0.5);
+    border: 1px solid rgba(15, 23, 42, 0.22);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    transition: all 200ms ease;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(248, 250, 252, 0.65);
+    border-color: rgba(15, 23, 42, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .btn-secondary.is-full {
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    .btn-secondary {
+      height: 50px;
+      min-height: 50px;
+    }
+  }
+
+  .btn-gold {
+    @apply bg-gold text-white px-6 py-3 rounded-lg font-semibold;
+    @apply hover:bg-amber-600 transition-all duration-200 shadow-sm;
+    @apply hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  /* Luminous micro-glow for specific action links only */
+  .link-aura {
+    position: relative;
+    text-decoration: none;
+  }
+  .link-aura:hover {
+    text-decoration: none;
+  }
+  .link-aura::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    top: -8px;
+    bottom: -8px;
+    background: radial-gradient(
+      closest-side,
+      rgba(43, 109, 235, 0.22),
+      transparent 70%
+    );
+    filter: blur(12px);
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+  .link-aura:hover::after,
+  .link-aura:focus-visible::after {
+    opacity: 1;
+  }
+
+  /* Link with animated underline */
+  .link-underline {
+    @apply relative;
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute bottom-0 left-0 h-0.5 w-0 bg-cert-500 transition-all duration-300;
+  }
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+
+  /* Verification record: seal without hero haze */
+  .record-seal .seal__glow {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Hero ambient: felt, not seen */
+  .hero-ambient {
+    background:
+      radial-gradient(900px circle at 18% 10%, rgba(43, 109, 235, 0.05), transparent 62%),
+      radial-gradient(760px circle at 74% 26%, rgba(124, 77, 255, 0.035), transparent 58%);
+  }
+
+  /* Subtle radial behind seal to anchor spatially */
+  .seal-anchor {
+    position: relative;
+  }
+  .seal-anchor::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(43, 109, 235, 0.04) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ─── VERIFICATION SEAL ─── */
+  /* P0: Rolex rotor perpetual micro-motion. CSS-only. No WebGL. */
+
+  .seal-wrapper {
+    transform-style: preserve-3d;
+    transition: transform 280ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+  /* Layer 5: Parallax tilt on hover — feels like physical object */
+  .seal-wrapper:hover {
+    transform: rotateX(2deg) rotateY(-3deg) translateY(-2px);
+  }
+
+  .seal {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 380px;
+    aspect-ratio: 1 / 1;
+    overflow: visible;
+    isolation: isolate;
+
+    --seal-size: 100%;
+    --ring-outer-inset: 12px;
+    --ring-inner-inset: 20px;
+    --ring-mid-inset: calc((var(--ring-outer-inset) + var(--ring-inner-inset)) / 2);
+    --seal-specular-duration: 18s;
+  }
+
+
+  /* Responsive size variants */
+  .seal--sm  { width: 220px; }
+  .seal--md  { width: 280px; }
+  .seal--lg  { width: 360px; }
+  .seal--hero { width: 220px; }
+
+  @media (min-width: 640px) {
+    .seal--md   { width: 360px; }
+    .seal--hero { width: 340px; }
+  }
+  @media (min-width: 1024px) {
+    .seal--lg   { width: 420px; }
+    .seal--hero { width: 380px; }
+  }
+
+  @keyframes seal-breathe {
+    0% { opacity: 0.10; }
+    100% { opacity: 0.16; }
+  }
+
+  /* Rotors: transform-only animations — NO static transform on rotor (kills animation) */
+  .seal__rotor,
+  .seal__rotorInner {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    will-change: transform;
+    transform-origin: 50% 50%;
+    z-index: 1;
+  }
+
+  .seal__rotor {
+    animation: seal-rotate var(--seal-rotor-a, 60s) linear infinite;
+  }
+
+  .seal__rotor-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    pointer-events: none;
+  }
+
+  /* Layer 2: Specular sweep — light catching metal, not UI shimmer */
+  .seal__specular {
+    position: absolute;
+    inset: 8px;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 3;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg 302deg,
+      rgba(255, 255, 255, 0.38) 314deg 326deg,
+      transparent 338deg 360deg
+    );
+    -webkit-mask: radial-gradient(
+      circle,
+      transparent 55%,
+      #000 58% 72%,
+      transparent 75%
+    );
+    mask: radial-gradient(
+      circle,
+      transparent 55%,
+      #000 58% 72%,
+      transparent 75%
+    );
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    animation: seal-specular var(--seal-specular-duration) linear infinite;
+  }
+  /* Fallback: overlay can vanish on some displays; use normal + higher opacity (capped) */
+  @supports not (mix-blend-mode: overlay) {
+    .seal__specular {
+      mix-blend-mode: normal;
+      opacity: 0.22;
+    }
+  }
+
+  /* Asymmetric tracking detail — movement witness at 12 o'clock */
+  .seal__rotor-notch {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 14px;
+    background: var(--seal-notch-bg);
+    border-radius: 0 0 4px 4px;
+    pointer-events: none;
+    z-index: 10;
+    opacity: var(--seal-notch-opacity);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    /* Machined emboss + contrast edge for movement readability */
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+
+  .seal__rotorInner {
+    animation: seal-rotate var(--seal-rotor-b, 90s) linear infinite reverse;
+  }
+
+  /* Core — static */
+  .seal__core {
+    position: absolute;
+    inset: 10%;
+    border-radius: 9999px;
+    z-index: 2;
+  }
+
+  /* Layer 3: Subtle living aura — targeted breathe */
+  .seal__glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.06);
+    filter: blur(24px);
+    pointer-events: none;
+    z-index: 0;
+    will-change: opacity;
+    animation: seal-breathe var(--seal-breathe) ease-in-out infinite alternate;
+  }
+
+  /* Checkmark — stamp size (12–13%), stroke constant 5, Layer 4: one-time stamp settle */
+  .seal__check {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 50;
+    pointer-events: none;
+    color: var(--verity-emerald);
+
+    width: 12.5%;
+    height: auto;
+
+    transform: translate(-50%, calc(-50% + 1px));
+    filter: none;
+    animation: seal-check-stamp 420ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+  }
+
+  .seal__check path {
+    stroke: var(--verity-emerald);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Hover: subtle speed-up 10–15% (debug keeps fast speeds) */
+  .seal:hover .seal__rotor {
+    animation-duration: 52s;
+  }
+  .seal:hover .seal__rotorInner {
+    animation-duration: 78s;
+  }
+  :root[data-seal-debug="1"] .seal:hover .seal__rotor {
+    animation-duration: 6s;
+  }
+  :root[data-seal-debug="1"] .seal:hover .seal__rotorInner {
+    animation-duration: 9s;
+  }
+
+  .seal__ripple {
+    position: absolute;
+    inset: -4%;
+    border-radius: 9999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .seal[data-seal-active="1"] .seal__ripple {
+    animation: seal-ripple 700ms ease-out forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seal__rotor,
+    .seal__rotorInner,
+    .seal__glow,
+    .seal__specular {
+      animation: none !important;
+    }
+    .seal__ripple {
+      animation: none !important;
+    }
+    .seal__check {
+      animation: none;
+    }
+    .seal-wrapper:hover {
+      transform: none;
+    }
+  }
+
+  /* Story rail under CTA cluster */
+  .process-rail {
+    position: relative;
+    display: inline-flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .process-rail::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.35);
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+
+  .process-rail > * {
+    position: relative;
+    z-index: 1;
+    background: var(--snow);
+    padding: 0 6px;
+  }
+
+  .process-step {
+    display: inline-grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .process-node {
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: #f8fafc;
+    flex-shrink: 0;
+  }
+
+  .process-node.is-verified {
+    border-color: rgba(16, 185, 129, 0.55);
+    background: rgba(16, 185, 129, 0.16);
+  }
+
+  .process-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(15, 23, 42, 0.55);
+    white-space: nowrap;
+  }
+
+  .process-label.is-verified {
+    color: var(--verity-emerald);
+  }
+
+  /* Registry-confirmed stamp treatment */
+  .seal-stamp__kicker {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(15, 23, 42, 0.55);
+  }
+
+  .seal-stamp__state {
+    margin-top: 4px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: rgba(15, 23, 42, 0.7);
+    text-transform: none;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .seal-stamp__state .is-verified {
+    color: var(--verity-emerald);
+    letter-spacing: 0.02em;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+  }
+
+  /* Headline accent - solid or 2-stop, luxury discipline */
+  .text-gradient {
+    background: linear-gradient(135deg, #1E3A8A 0%, #334155 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Clean cert blue gradient - Clarity style (dark, subtle) */
+  .bg-gradient-hero {
+    background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #1E40AF 100%);
+  }
+
+  /* Legacy - blue only */
+  .certified-gradient-text {
+    background: linear-gradient(
+      135deg,
+      #1E3A8A 0%,
+      #2563EB 50%,
+      #3B82F6 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes bloom {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes nfc-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); transform: scale(1); }
+    50% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); transform: scale(1.02); }
+  }
+
+  .animate-bloom {
+    animation: bloom 0.6s ease-out forwards;
+  }
+
+  .animate-nfc-pulse {
+    animation: nfc-pulse 2s ease-in-out infinite;
+  }
+
+  .section-title {
+    @apply text-lg font-semibold text-slate-900;
+  }
+
+  .insight-text {
+    @apply text-sm leading-relaxed text-slate-700;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+  .delay-700 {
+    animation-delay: 700ms;
   }
 }

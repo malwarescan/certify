@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  <circle cx="200" cy="200" r="70" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+  <text x="200" y="208" text-anchor="middle" font-family="system-ui" font-size="12" fill="#64748B">DR-2301</text>
+</svg>
